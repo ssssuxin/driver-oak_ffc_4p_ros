@@ -4,7 +4,7 @@ This driver is designed for [OmniNxt](https://github.com/HKUST-Aerial-Robotics/O
 
 ### How to use
 ```shell
-git clone https://github.com/D2SLAM-Fusion/oak_ffc_4p_ros.git
+git clone [https://github.com/D2SLAM-Fusion/oak_ffc_4p_ros.git](https://github.com/ssssuxin/driver-oak_ffc_4p_ros.git)
 ```
 
  **Compile Docker images**
