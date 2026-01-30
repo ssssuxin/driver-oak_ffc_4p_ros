@@ -1,4 +1,6 @@
-FROM ros:noetic-robot-focal
+ARG BASE_IMAGE=public.ecr.aws/docker/library/ros:noetic-robot-focal
+FROM ${BASE_IMAGE}
+#FROM ros:noetic-robot-focal
 ARG OAK_WS=/root/oak_ffc_ws/
 ARG DEPTH_CORE=/root/3rd_party/
 ARG ROS_VERSION=noetic

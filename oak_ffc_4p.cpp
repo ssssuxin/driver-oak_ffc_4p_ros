@@ -269,17 +269,25 @@ void FFC4PDriver::GrabImg() {
   }
 
   if (this->module_config_.sharpness_calibration_mode) {
-    // for (auto& image_node : this->image_pub_node_) {
-    //   cv_img.image = image_node.second.image;
-    //   image_node.second.ros_publisher_ptr->publish(
-    //       cv_img.toCompressedImageMsg());
-    // }
+    // Publish all camera images with the same timestamp
+    cv_img.header.stamp = host_ros_now_time;
+    cv_img.header.frame_id = "depth ai";
+    cv_img.encoding = "bgr8";
+    
+    for (auto& image_node : this->image_pub_node_) {
+      // Set image and publish using ImagePubNode's publisher
+      cv_img.image = image_node.second.image;
+      image_node.second.ros_publisher_ptr->publish(cv_img.toImageMsg());
+    }
   } else {
     for (auto& image_node : this->image_pub_node_) {
+      // Copy to assemble image
       image_node.second.image.copyTo(
           assemble_cv_img.image(cv::Rect(colow_position, 0, 1280, 720)));
       colow_position += IMAGE_WIDTH;
     }
+    
+    // Publish assemble image
     if (this->module_config_.compressed_mode) {
       assemble_image_publisher_.publish(assemble_cv_img.toCompressedImageMsg());
     } else {
